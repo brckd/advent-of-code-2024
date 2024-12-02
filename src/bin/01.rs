@@ -10,7 +10,7 @@ pub fn part_one(input: &str) -> Option<u32> {
 
     let id_pairs = left_ids.iter().zip(right_ids.iter_mut());
     let total_distance =
-        id_pairs.fold(0, |p, (id1, id2)| p + ((*id1 as i64) - (*id2 as i64)).abs()) as u32;
+        id_pairs.fold(0, |p, (id1, id2)| p + id1.abs_diff(*id2)) as u32;
 
     Some(total_distance)
 }
