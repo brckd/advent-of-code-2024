@@ -9,8 +9,7 @@ pub fn part_one(input: &str) -> Option<u32> {
     right_ids.sort();
 
     let id_pairs = left_ids.iter().zip(right_ids.iter_mut());
-    let total_distance =
-        id_pairs.fold(0, |p, (id1, id2)| p + id1.abs_diff(*id2)) as u32;
+    let total_distance = id_pairs.fold(0, |p, (id1, id2)| p + id1.abs_diff(*id2)) as u32;
 
     Some(total_distance)
 }
@@ -22,12 +21,12 @@ pub fn part_two(input: &str) -> Option<u32> {
 
     for right_id in right_ids {
         *right_id_counts.entry(right_id).or_insert(0) += 1;
-    };
+    }
 
     let mut similarity_score: u32 = 0;
     for left_id in left_ids {
         similarity_score += left_id * right_id_counts.get(&left_id).unwrap_or(&0);
-    };
+    }
     Some(similarity_score)
 }
 

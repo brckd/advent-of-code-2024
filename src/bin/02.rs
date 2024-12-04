@@ -1,10 +1,13 @@
 advent_of_code::solution!(2);
 
 pub fn part_one(input: &str) -> Option<u32> {
-    let safe_reports_amount = input.lines().filter(|line| {
-        let report: Vec<u32> = line.split(" ").map(|l| l.parse::<u32>().unwrap()).collect();
-        report_is_valid(&report)
-    }).count() as u32;
+    let safe_reports_amount = input
+        .lines()
+        .filter(|line| {
+            let report: Vec<u32> = line.split(" ").map(|l| l.parse::<u32>().unwrap()).collect();
+            report_is_valid(&report)
+        })
+        .count() as u32;
 
     Some(safe_reports_amount)
 }
@@ -23,25 +26,29 @@ pub fn ordering_is_valid((first_level, second_level, third_level): (&u32, &u32, 
 pub fn report_is_valid(report: &Vec<u32>) -> bool {
     let mut level_pairs = report.iter().zip(report.iter().skip(1));
     if !level_pairs.all(difference_is_valid) {
-        return false
+        return false;
     }
 
     if !(report.iter().is_sorted() || report.iter().rev().is_sorted()) {
-        return false
+        return false;
     }
 
     true
 }
 
 pub fn part_two(input: &str) -> Option<u32> {
-    let safe_reports_amount = input.lines().filter(|line| {
-        let report: Vec<u32> = line.split(" ").map(|l| l.parse::<u32>().unwrap()).collect();
-        report_is_valid(&report) || (0..report.len()).any(|i| {
-            let mut report = report.clone();
-            report.remove(i);
+    let safe_reports_amount = input
+        .lines()
+        .filter(|line| {
+            let report: Vec<u32> = line.split(" ").map(|l| l.parse::<u32>().unwrap()).collect();
             report_is_valid(&report)
+                || (0..report.len()).any(|i| {
+                    let mut report = report.clone();
+                    report.remove(i);
+                    report_is_valid(&report)
+                })
         })
-    }).count() as u32;
+        .count() as u32;
 
     Some(safe_reports_amount)
 }
